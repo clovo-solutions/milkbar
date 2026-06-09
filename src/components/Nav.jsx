@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCalApi } from '@calcom/embed-react';
 import { getLenis } from '../lib/lenis';
 
 const links = ['Menu', 'About', 'Contact'];
+const CAL_LINK = 'clovo-solutions-7teskm';
 
 function BurgerIcon({ open }) {
   return (
@@ -56,6 +58,23 @@ export default function Nav() {
     menuOpen ? lenis.stop() : lenis.start();
     return () => lenis.start();
   }, [menuOpen]);
+
+  // Init Cal.com embed
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi();
+      cal('ui', {
+        theme: 'dark',
+        styles: { branding: { brandColor: '#0A0A0A' } },
+      });
+    })();
+  }, []);
+
+  function openBooking(e) {
+    e.preventDefault();
+    setMenuOpen(false);
+    getCalApi().then(cal => cal('modal', { calLink: CAL_LINK }));
+  }
 
   const logo = (
     <img
@@ -131,7 +150,7 @@ export default function Nav() {
               }}>
                 Call us
               </a>
-              <a href="#contact" style={{
+              <a href="#" onClick={openBooking} style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 400,
                 fontSize: 12,
@@ -201,8 +220,8 @@ export default function Nav() {
             {/* CTA buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
               <motion.a
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
+                href="#"
+                onClick={openBooking}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.26, duration: 0.4 }}
