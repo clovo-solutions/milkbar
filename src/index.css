@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+
+:root {
+  --color-sky-solid:  #1E1E1E;
+  --color-sky-light:  #0A0A0A;
+  --color-sky-medium: #161616;
+  --color-sky-footer: #111111;
+  --color-heading:    #F0F0EC;
+  --color-body:       #787876;
+  --color-white:      #FFFFFF;
+  --color-accent:     #7DD3F5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--color-sky-light);
+  color: var(--color-body);
+  overflow-x: hidden;
+  color-scheme: dark;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ticker-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes drip-fall {
+  from { stroke-dashoffset: 220; }
+  to { stroke-dashoffset: 0; }
+}
+
+.marquee-track {
+  animation: marquee-left 32s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+.marquee-track-rev {
+  animation: marquee-right 36s linear infinite;
+  will-change: transform;
+}
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+.spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+.ticker-track {
+  animation: ticker-left 22s linear infinite;
+  will-change: transform;
+}
+.milk-drip {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: drip-fall 1.4s ease-out 1s forwards;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
