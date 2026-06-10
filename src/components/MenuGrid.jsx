@@ -40,7 +40,7 @@ function MenuCard({ item, index }) {
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 600,
             fontSize: 15,
-            color: 'var(--color-sky-solid)',
+            color: 'rgba(255,255,255,0.75)',
             whiteSpace: 'nowrap',
           }}>
             {item.price}
