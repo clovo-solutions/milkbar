@@ -13,6 +13,9 @@ const POSTS = [
   { id: 'post-6', mediaUrl: '/milkbar-post6.jpg', permalink: 'https://www.instagram.com/p/DYl2_RNCITl/' },
   { id: 'post-7', mediaUrl: '/milkbar-post7.jpg', permalink: 'https://www.instagram.com/p/DYWaOsAjS94/' },
   { id: 'post-8', mediaUrl: '/milkbar-post8.jpg', permalink: 'https://www.instagram.com/p/DYRXkl_AQZx/' },
+  { id: 'post-8', mediaUrl: '/milkbar-post9.jpg', permalink: 'https://www.instagram.com/milkbarcy/p/DYEYvwfCUBC/' },
+  { id: 'post-8', mediaUrl: '/milkbar-post10.jpg', permalink: 'https://www.instagram.com/milkbarcy/p/DX_ScHHgTJc/' },
+  { id: 'post-8', mediaUrl: '/milkbar-post11.jpg', permalink: 'https://www.instagram.com/milkbarcy/p/DXqoyOql0in/' },
 ];
 
 function PostCard({ post }) {

@@ -4,6 +4,91 @@ import { useIsMobile } from '../lib/useIsMobile';
 const navLinks = [ 'Menu', 'About', 'Contact'];
 const ticker = 'Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  Milkbar  ·  ';
 
+function ContactInfo() {
+  const labelStyle = { color: 'rgba(255,255,255,0.5)' };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, textAlign: 'left' }}>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        Limassol, Cyprus
+      </p>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 12, color: '#fff', letterSpacing: '0.04em' }}>
+        <span style={labelStyle}>Address:</span> Arch. Makarios III Avenue 226, Limassol 3030
+      </p>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 12, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.04em' }}>
+        <span style={labelStyle}>Phone:</span> 25 354100
+      </p>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 11, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.04em', lineHeight: 1.7 }}>
+        <span style={labelStyle}>Hours:</span><br />Tue–Sun 7:30 am–11 pm<br />Mon 7:30 am–8 pm
+      </p>
+    </div>
+  );
+}
+
+function FooterBottom({ isMobile }) {
+  return (
+    <div style={{
+      background: 'var(--color-sky-footer)',
+      borderTop: '1px solid rgba(255,255,255,0.12)',
+      padding: isMobile ? '40px 30px' : '60px',
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      alignItems: 'flex-start',
+      justifyContent: isMobile ? 'flex-start' : 'space-between',
+      gap: isMobile ? 32 : 60,
+    }}>
+      {/* Nav links */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {navLinks.map(link => (
+          <a key={link} href={`#${link.toLowerCase()}`} style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 13, color: '#fff', textDecoration: 'none', letterSpacing: '0.06em' }}>
+            {link}
+          </a>
+        ))}
+      </div>
+
+      {/* Contact info */}
+      <ContactInfo />
+
+      {/* Social icons */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <a href="https://www.instagram.com/milkbarcy/" target="_blank" rel="noopener noreferrer" style={{ width: 44, height: 44, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', textDecoration: 'none' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/milkbarcy/" target="_blank" rel="noopener noreferrer" style={{ width: 44, height: 44, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', textDecoration: 'none' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a
+          href="https://wolt.com/en/cyp/limassol/restaurant/milkbar-pns?srsltid=AfmBOopShmEmM5CoL3i_XwYMg0CL73y3D4N_G9AFB1pK0NnoDkcvR42n"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            height: 44,
+            padding: '0 18px',
+            borderRadius: 22,
+            border: '1.5px solid rgba(255,255,255,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 500,
+            fontSize: 13,
+            color: '#fff',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Order on Wolt
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export default function Footer() {
   const isMobile = useIsMobile();
   return (
@@ -32,7 +117,7 @@ export default function Footer() {
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          minHeight: 260,
+          minHeight: 346,
         }}>
           {/* Gradient overlay: transparent → 50% black, keeps content readable */}
           <div style={{
@@ -79,78 +164,6 @@ export default function Footer() {
               />
             </motion.div>
           </div>
-
-          {/* Footer content — sits above the gradient overlay */}
-          {isMobile ? (
-            /* Mobile: brand centered top, nav+social separated at bottom */
-            <div style={{ marginTop: 'auto', position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', gap: 32 }}>
-              {/* Brand */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Limassol, Cyprus
-                </p>
-              </div>
-
-              {/* Divider */}
-              <div style={{ height: 1, background: 'rgba(255,255,255,0.12)' }} />
-
-              {/* Nav + social */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {navLinks.map(link => (
-                    <a key={link} href={`#${link.toLowerCase()}`} style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 13, color: '#fff', textDecoration: 'none', letterSpacing: '0.06em' }}>
-                      {link}
-                    </a>
-                  ))}
-                </div>
-                <div style={{ display: 'flex', gap: 10 }}>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/>
-                    </svg>
-                  </a>
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ) : (
-            /* Desktop: 3-column grid */
-            <div style={{ marginTop: 'auto', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', position: 'relative', zIndex: 2 }}>
-              {/* Left nav */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {navLinks.map(link => (
-                  <a key={link} href={`#${link.toLowerCase()}`} style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 13, color: '#fff', textDecoration: 'none', letterSpacing: '0.06em' }}>
-                    {link}
-                  </a>
-                ))}
-              </div>
-
-              {/* Center: location */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Limassol, Cyprus
-                </p>
-              </div>
-
-              {/* Right: social icons */}
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ width: 44, height: 44, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', textDecoration: 'none' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/>
-                  </svg>
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ width: 44, height: 44, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', textDecoration: 'none' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
@@ -180,6 +193,9 @@ export default function Footer() {
           </span>
         </div>
       </div>
+
+      {/* Bottom bar: nav, contact info, socials */}
+      <FooterBottom isMobile={isMobile} />
     </footer>
   );
 }

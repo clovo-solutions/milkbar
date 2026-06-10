@@ -5,6 +5,7 @@ import { getLenis } from '../lib/lenis';
 
 const links = ['Menu', 'About', 'Contact'];
 const CAL_LINK = 'clovo-solutions-7teskm';
+const WOLT_URL = 'https://wolt.com/en/cyp/limassol/restaurant/milkbar-pns?srsltid=AfmBOopShmEmM5CoL3i_XwYMg0CL73y3D4N_G9AFB1pK0NnoDkcvR42n';
 
 function BurgerIcon({ open }) {
   return (
@@ -239,6 +240,29 @@ export default function Nav() {
                 }}
               >
                 Book a Table
+              </motion.a>
+              <motion.a
+                href={WOLT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.29, duration: 0.4 }}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: 13,
+                  letterSpacing: '0.12em',
+                  textDecoration: 'none',
+                  color: '#fff',
+                  border: '1px solid rgba(255,255,255,0.6)',
+                  borderRadius: 100,
+                  padding: '12px 32px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Order on Wolt
               </motion.a>
               <motion.a
                 href="tel:+35725354100"
