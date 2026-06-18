@@ -11,7 +11,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState('Mains');
+  const [activeCategory, setActiveCategory] = useState('Most Ordered');
 
   useEffect(() => {
     const lenis = createLenis();

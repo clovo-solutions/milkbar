@@ -2,14 +2,31 @@
 
 
 :root {
-  --color-sky-solid:  #1E1E1E;
-  --color-sky-light:  #0A0A0A;
-  --color-sky-medium: #161616;
-  --color-sky-footer: #111111;
-  --color-heading:    #F0F0EC;
-  --color-body:       #787876;
-  --color-white:      #FFFFFF;
-  --color-accent:     #7DD3F5;
+  /* ── The Cookhouse — organic / natural light palette ── */
+  --color-bg:         #F5F1E8;  /* main cream canvas */
+  --color-bg-warm:    #EFE8D7;  /* warmer panel / card */
+  --color-bg-deep:    #E7DEC9;  /* deepest cream for contrast blocks */
+  --color-cream:      #FAF7EF;  /* near-white cream */
+
+  --color-ink:        #1E3A2F;  /* forest green — headings */
+  --color-ink-soft:   #4A5C50;  /* muted green — body copy */
+  --color-ink-faint:  #8A9389;  /* faded labels */
+
+  --color-accent:     #C56B45;  /* terracotta */
+  --color-accent-deep:#A8542F;  /* darker terracotta for hover */
+  --color-olive:      #7C7A45;  /* olive secondary accent */
+
+  /* legacy aliases kept so older references resolve to the new theme */
+  --color-sky-light:  #F5F1E8;
+  --color-sky-medium: #EFE8D7;
+  --color-sky-solid:  #E7DEC9;
+  --color-sky-footer: #1E3A2F;
+  --color-heading:    #1E3A2F;
+  --color-body:       #5C6B5F;
+  --color-white:      #FAF7EF;
+
+  --font-display: 'Special Gothic Condensed One', 'Hanken Grotesk', sans-serif;
+  --font-body:    'Hanken Grotesk', sans-serif;
 }
 
 * {
@@ -24,17 +41,31 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: var(--color-sky-light);
-  color: var(--color-body);
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-ink-soft);
   overflow-x: hidden;
-  color-scheme: dark;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
 }
 
 #root {
   width: 100%;
   max-width: 100%;
   text-align: left;
+}
+
+/* Subtle paper grain for organic depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @keyframes marquee-left {
@@ -72,9 +103,9 @@ body {
   100% { background-position: -200% 0; }
 }
 
-@keyframes drip-fall {
-  from { stroke-dashoffset: 220; }
-  to { stroke-dashoffset: 0; }
+@keyframes growStem {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
 }
 
 .marquee-track {
@@ -92,16 +123,11 @@ body {
   animation: float 4s ease-in-out infinite;
 }
 .spin-slow {
-  animation: spin-slow 20s linear infinite;
+  animation: spin-slow 26s linear infinite;
 }
 .ticker-track {
-  animation: ticker-left 22s linear infinite;
+  animation: ticker-left 30s linear infinite;
   will-change: transform;
-}
-.milk-drip {
-  stroke-dasharray: 220;
-  stroke-dashoffset: 220;
-  animation: drip-fall 1.4s ease-out 1s forwards;
 }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

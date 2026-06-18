@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
+import { img } from '../data/menu';
 
 const items = [
-  { label: 'Smoothies', category: 'Smoothies', img: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=200&auto=format&fit=crop', rot: '-6deg' },
-  { label: 'Coffees', category: 'Drinks', img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&auto=format&fit=crop', rot: '4deg' },
-  { label: 'Mains', category: 'Mains', img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=200&auto=format&fit=crop', rot: '-3deg' },
-  { label: 'Burgers', category: 'Burgers', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&auto=format&fit=crop', rot: '7deg' },
-  { label: 'Cocktails', category: 'Cocktails', img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&auto=format&fit=crop', rot: '-5deg' },
-  { label: 'Brunch', category: 'Breakfast', img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=200&auto=format&fit=crop', rot: '3deg' },
-  { label: 'Pasta', category: 'Pasta', img: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=200&auto=format&fit=crop', rot: '-4deg' },
-  { label: 'Desserts', category: 'Desserts', img: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=200&auto=format&fit=crop', rot: '6deg' },
+  { label: 'Juices', category: 'Juices & Smoothies', img: img('S1'), rot: '-6deg' },
+  { label: 'Smoothie Bowls', category: 'Smoothie Bowls', img: img('Acai'), rot: '4deg' },
+  { label: 'Veggie Dishes', category: 'Veggie Dishes', img: img('Mango Salad'), rot: '-3deg' },
+  { label: 'Oats & Chia', category: 'Oats & Chia', img: img('Porridge'), rot: '7deg' },
+  { label: 'Granola', category: 'Granola Bowls', img: img('Yoghurt, Banana & Maple'), rot: '-5deg' },
+  { label: 'Coffee', category: 'Hot & Cold', img: img('Freddo Espresso'), rot: '3deg' },
+  { label: 'Desserts', category: 'Desserts', img: img('Carrot Muffin'), rot: '-4deg' },
+  { label: 'Bakery', category: 'Bakery', img: img('Almond Croissant'), rot: '6deg' },
 ];
 
 const ArrowCircle = () => (
@@ -19,8 +20,8 @@ const ArrowCircle = () => (
     width: 48,
     height: 48,
     borderRadius: '50%',
-    border: '2px solid rgba(255,255,255,0.25)',
-    color: 'rgba(255,255,255,0.6)',
+    border: '2px solid rgba(30,58,47,0.25)',
+    color: 'var(--color-accent)',
     fontSize: 20,
     flexShrink: 0,
     marginLeft: 20,
@@ -34,20 +35,15 @@ function MarqueeItem({ item, index, onCategoryClick }) {
   return (
     <div
       onClick={() => onCategoryClick(item.category)}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 0,
-        flexShrink: 0,
-        cursor: 'pointer',
-      }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 0, flexShrink: 0, cursor: 'pointer' }}
     >
       <span style={{
-        fontFamily: "'DM Sans', sans-serif",
-        fontWeight: 300,
-        fontSize: 'clamp(70px, 8vw, 110px)',
-        color: '#ffffff',
-        opacity: 0.07,
+        fontFamily: 'var(--font-display)',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: 'clamp(60px, 7vw, 100px)',
+        color: 'var(--color-ink)',
+        opacity: 0.13,
         whiteSpace: 'nowrap',
         lineHeight: 1,
         userSelect: 'none',
@@ -64,11 +60,12 @@ function MarqueeItem({ item, index, onCategoryClick }) {
           width: 80,
           height: 80,
           objectFit: 'cover',
-          borderRadius: 12,
+          borderRadius: 14,
           rotate: item.rot,
           flexShrink: 0,
           marginRight: 16,
-          boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+          boxShadow: '0 10px 24px -10px rgba(30,58,47,0.45)',
+          border: '3px solid var(--color-cream)',
         }}
       />
       <ArrowCircle />
@@ -81,20 +78,13 @@ export default function MenuMarquee({ onCategoryClick }) {
 
   return (
     <section style={{
-      background: 'var(--color-sky-light)',
+      background: 'var(--color-bg-warm)',
       overflow: 'hidden',
-      padding: '16px 0',
-      borderTop: '1px solid rgba(255,255,255,0.07)',
-      borderBottom: '1px solid rgba(255,255,255,0.07)',
+      padding: '22px 0',
+      borderTop: '1px solid rgba(30,58,47,0.1)',
+      borderBottom: '1px solid rgba(30,58,47,0.1)',
     }}>
-      <div
-        className="marquee-track"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          whiteSpace: 'nowrap',
-        }}
-      >
+      <div className="marquee-track" style={{ display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
         {doubled.map((item, i) => (
           <MarqueeItem key={`${item.label}-${i}`} item={item} index={i % items.length} onCategoryClick={onCategoryClick} />
         ))}

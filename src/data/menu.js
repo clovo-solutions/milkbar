@@ -1,69 +1,118 @@
+// The Cookhouse — menu. Images live in src/assets/*.avif, named after each item.
+const modules = import.meta.glob('../assets/*.avif', { eager: true, query: '?url', import: 'default' });
+
+const imgMap = {};
+for (const [path, url] of Object.entries(modules)) {
+  const base = path.split('/').pop().replace(/\.avif$/, '');
+  imgMap[base] = url;
+  // Some files are accidentally doubled, e.g. "Carrot Muffin Carrot Muffin" → "Carrot Muffin"
+  const doubled = base.match(/^(.+) \1$/);
+  if (doubled) imgMap[doubled[1]] = url;
+}
+
+// Look up an item's image by its exact name.
+export const img = (name) => imgMap[name];
+
 export const menuData = {
-  Breakfast: [
-    { name: "Milkbar's Breakfast", description: "Two eggs your way, halloumi, bacon, toast & roasted tomato", price: "€14", img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&auto=format&fit=crop" },
-    { name: "Eggs Benedict", description: "Poached eggs, Canadian bacon, hollandaise on toasted muffin", price: "€13", img: "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=600&auto=format&fit=crop" },
-    { name: "Mushroom Avocado", description: "Sautéed wild mushrooms, smashed avocado, poached eggs, sourdough", price: "€12", img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600&auto=format&fit=crop" },
-    { name: "Eggs Royale", description: "Smoked salmon, poached eggs, hollandaise, capers on brioche", price: "€14", img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&auto=format&fit=crop" },
-    { name: "French Toast", description: "Thick-cut brioche, maple syrup, fresh berries, whipped cream", price: "€11", img: "https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600&auto=format&fit=crop" },
-    { name: "English Combo", description: "Eggs, sausage, beans, mushrooms, bacon, hash brown & toast", price: "€15", img: "https://images.unsplash.com/photo-1607532941433-304659e8198a?w=600&auto=format&fit=crop" },
+  "Most Ordered": [
+    { name: "Egg Protein Salad", description: "Mixed greens, egg, avocado, cottage cheese, aubergine, peppers, capers, pine nuts, seeds and pumpkin bread", price: "€15.00", popular: true, img: img("Egg Protein Salad") },
+    { name: "Acai", description: "Homemade granola, fresh fruit, goji berries, coconut flakes & cacao nibs", price: "€13.00", img: img("Acai") },
+    { name: "Porridge", description: "Grilled banana, pistachio butter, almond flakes, pistachios, cinnamon with honey or maple", price: "€11.00", img: img("Porridge") },
+    { name: "Freddo Espresso", description: "", price: "€3.50", img: img("Freddo Espresso") },
+    { name: "Loaded Sweet Potato", description: "With hummus and avocado", price: "€11.50", img: img("Loaded Sweet Potato") },
+    { name: "Yoghurt, Strawberries & Blueberries", description: "", price: "€11.00", img: img("Yoghurt, Strawberries & Blueberries") },
+    { name: "Raw Veggie Summer Rolls", description: "Rice noodles, pistachios, black sesame and homemade peanut sauce", price: "€12.50", img: img("Raw Veggie Summer Rolls") },
+    { name: "Stuffed Medjool Date with Peanut Butter & Dark Chocolate", description: "", price: "€3.00", img: img("Stuffed Medjool Date with Peanut Butter & Dark Chocolate") },
+    { name: "Grilled Banana Bread", description: "Served with mascarpone & grilled banana", price: "€6.50", img: img("Grilled Banana Bread") },
+    { name: "Berry Chia Pudding", description: "Topped with homemade nutty granola, mixed berries and almond butter", price: "€10.00", img: img("Berry Chia Pudding") },
+    { name: "Mixed Lentil Bowl", description: "Carrot, spinach, rocket & black olives", price: "€12.50", img: img("Mixed Lentil Bowl") },
+    { name: "Iced Latte", description: "", price: "€4.00", img: img("Iced Latte") },
   ],
-  Smoothies: [
-    { name: "Morning Sunshine", description: "Mango, orange, turmeric, ginger, banana, oat milk", price: "€8", img: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&auto=format&fit=crop" },
-    { name: "Tropical Rain", description: "Pineapple, coconut milk, mango, lime, spirulina", price: "€8.5", img: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&auto=format&fit=crop" },
-    { name: "Berry White", description: "Mixed berries, banana, almond milk, honey, chia seeds", price: "€8", img: "https://images.unsplash.com/photo-1502741224143-90386d7f8c82?w=600&auto=format&fit=crop" },
-    { name: "BBC", description: "Blueberry, blackberry, coconut water, agave, lemon", price: "€8.5", img: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&auto=format&fit=crop" },
-    { name: "Marlon Mango", description: "Mango, passion fruit, orange, ginger, ashwagandha", price: "€9", img: "https://images.unsplash.com/photo-1546039907-7fa05f864c02?w=600&auto=format&fit=crop" },
-    { name: "Green Detox", description: "Spinach, cucumber, green apple, lemon, ginger, matcha", price: "€9", img: "https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=600&auto=format&fit=crop" },
+  "Bakery": [
+    { name: "Croissant", description: "", price: "€3.00", img: img("Croissant") },
+    { name: "Almond Croissant", description: "", price: "€6.00", img: img("Almond Croissant") },
+    { name: "Devon Ham & Cheese Croissant Sandwich", description: "", price: "€7.00", img: img("Devon Ham & Cheese Croissant Sandwich") },
+    { name: "Herbed Zucchini & Feta Bread", description: "", price: "€5.00", img: img("Herbed Zucchini & Feta Bread") },
+    { name: "Grilled Banana Bread", description: "Served with mascarpone & grilled banana", price: "€6.50", img: img("Grilled Banana Bread") },
   ],
-  Mains: [
-    { name: "Sea Bass", description: "Pan-seared sea bass, caper butter sauce, seasonal veg, lemon", price: "€22", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&auto=format&fit=crop" },
-    { name: "Salmon Fillet", description: "Grilled Atlantic salmon, dill cream sauce, roasted potatoes", price: "€21", img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&auto=format&fit=crop" },
-    { name: "Grilled Chicken", description: "Free-range chicken breast, chimichurri, grilled corn, greens", price: "€18", img: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&auto=format&fit=crop" },
-    { name: "Crispy Calamari", description: "Lightly battered calamari rings, aioli, lemon wedge", price: "€16", img: "https://images.unsplash.com/photo-1604909052743-94e838986d24?w=600&auto=format&fit=crop" },
-    { name: "Pork Chop", description: "Thick-cut pork chop, apple mustard glaze, mashed potato", price: "€20", img: "https://images.unsplash.com/photo-1432139509613-5c4255815697?w=600&auto=format&fit=crop" },
+  "Oats & Chia": [
+    { name: "Porridge", description: "Grilled banana, pistachio butter, almond flakes, pistachios, cinnamon with honey or maple", price: "€11.00", popular: true, img: img("Porridge") },
+    { name: "Overnight Chia Oats", description: "Peanut butter, chocolate ganache, salted peanuts and banana", price: "€8.50", img: img("Overnight Chia Oats") },
+    { name: "Overnight Matcha Chia Oats", description: "Topped with strawberries, coconut flakes and pistachios", price: "€10.00", img: img("Overnight Matcha Chia Oats") },
+    { name: "Berry Chia Pudding", description: "Topped with homemade nutty granola, mixed berries and almond butter", price: "€10.00", img: img("Berry Chia Pudding") },
   ],
-  Burgers: [
-    { name: "Peking Duck Bao", description: "Confit duck, hoisin, pickled cucumber, spring onion in steamed bao", price: "€17", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&auto=format&fit=crop" },
-    { name: "The Black Burger", description: "Wagyu patty, black brioche bun, truffle mayo, aged cheddar", price: "€18", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop" },
-    { name: "Smoked Pulled Pork Bao", description: "12-hour pulled pork, slaw, sriracha mayo in steamed bao", price: "€16", img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=600&auto=format&fit=crop" },
-    { name: "Salmon Bun", description: "Pan-fried salmon, dill sauce, baby gem, red onion on brioche", price: "€17", img: "https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=600&auto=format&fit=crop" },
+  "Granola Bowls": [
+    { name: "Yoghurt, Banana & Maple", description: "Dried fruits, banana chips, almonds and pistachios", price: "€11.00", img: img("Yoghurt, Banana & Maple") },
+    { name: "Yoghurt, Strawberries & Blueberries", description: "", price: "€11.00", img: img("Yoghurt, Strawberries & Blueberries") },
   ],
-  Pasta: [
-    { name: "Prawn Pasta", description: "King prawns, cherry tomatoes, white wine, garlic, linguine", price: "€19", img: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=600&auto=format&fit=crop" },
-    { name: "Ala Carbonara", description: "Guanciale, egg yolk, pecorino, black pepper, spaghetti", price: "€16", img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&auto=format&fit=crop" },
-    { name: "Cheese Ravioli", description: "Ricotta & spinach ravioli, sage brown butter, pine nuts", price: "€17", img: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600&auto=format&fit=crop" },
-    { name: "Pollo Funghi", description: "Grilled chicken, wild mushrooms, cream, thyme, pappardelle", price: "€18", img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&auto=format&fit=crop" },
+  "Smoothie Bowls": [
+    { name: "Acai", description: "Homemade granola, fresh fruit, goji berries, coconut flakes & cacao nibs", price: "€13.00", popular: true, img: img("Acai") },
+    { name: "Playdate", description: "Fresh coconut, organic oats, homemade nutty granola, peanut butter, medjool dates, cinnamon, banana, organic dried mulberries, raw cashews, salted peanuts and black sesame", price: "€14.50", img: img("Playdate") },
+    { name: "Matchaful", description: "Fresh coconut, ceremonial grade matcha, banana, avocado, mixed berries, pistachio butter, pistachios, coconut flakes and dried mulberries", price: "€14.50", img: img("Matchaful") },
+    { name: "Exotica", description: "Fresh coconut, coconut yoghurt, banana, pineapple, mango, kiwi, passion fruit, ginger lime zest, turmeric, coconut flakes and pumpkin seeds", price: "€14.50", img: img("Exotica") },
+    { name: "Cosmic Cacao", description: "Fresh coconut, organic oats, raw cacao, organic cacao protein, cinnamon, almond butter, raw macadamia nuts, raw brazil nuts, pumpkin seeds, almond flakes, goji berries and coconut flakes", price: "€14.50", img: img("Cosmic Cacao") },
   ],
-  Salads: [
-    { name: "Burrata with Nectarine", description: "Burrata, ripe nectarine, pistachio, honey, micro basil, balsamic", price: "€15", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop" },
-    { name: "Super Bowl Salad", description: "Quinoa, roasted veg, chickpeas, tahini, pomegranate, herbs", price: "€14", img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&auto=format&fit=crop" },
-    { name: "The Milky One", description: "Halloumi, watermelon, mint, rocket, balsamic glaze", price: "€14", img: "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=600&auto=format&fit=crop" },
-    { name: "Golden Salad", description: "Roasted pumpkin, goat cheese, walnuts, honey dressing, spinach", price: "€13", img: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&auto=format&fit=crop" },
+  "Veggie Dishes": [
+    { name: "Raw Veggie Summer Rolls", description: "Rice noodles, pistachios, black sesame and homemade peanut sauce", price: "€12.50", img: img("Raw Veggie Summer Rolls") },
+    { name: "Mango Salad", description: "Seeds, sesame, lemongrette and fresh chili", price: "€12.00", img: img("Mango Salad") },
+    { name: "Loaded Sweet Potato", description: "With hummus and avocado", price: "€11.50", popular: true, img: img("Loaded Sweet Potato") },
+    { name: "Mixed Lentil Bowl", description: "Carrot, spinach, rocket & black olives", price: "€12.50", img: img("Mixed Lentil Bowl") },
+    { name: "Egg Protein Salad", description: "Mixed greens, egg, avocado, cottage cheese, aubergine, peppers, capers, pine nuts, seeds and pumpkin bread", price: "€15.00", popular: true, img: img("Egg Protein Salad") },
   ],
-  Snacks: [
-    { name: "Milkbar Triple Sandwich", description: "Three-layer club: smoked chicken, avocado, egg, brioche", price: "€13", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&auto=format&fit=crop" },
-    { name: "Steak Sandwich", description: "Sliced sirloin, caramelised onion, rocket, truffle mayo, ciabatta", price: "€15", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop" },
-    { name: "Vegan Basket", description: "Falafel, hummus, tabbouleh, stuffed grape leaves, pita", price: "€13", img: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&auto=format&fit=crop" },
-    { name: "Chicken Wrap", description: "Grilled chicken, tzatziki, tomato, lettuce, pickles in warm wrap", price: "€12", img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600&auto=format&fit=crop" },
+  "Juices & Smoothies": [
+    { name: "C1", description: "Carrot, orange, apple, ginger", price: "€6.50", img: img("C1") },
+    { name: "G1", description: "Celery, green apple, lime, ginger", price: "€6.50", img: img("G1") },
+    { name: "G2", description: "Pineapple, apple, lime", price: "€6.50", img: img("G2") },
+    { name: "G3", description: "Avocado, spinach, apple, cucumber, ginger", price: "€7.00", img: img("G3") },
+    { name: "O1", description: "Orange", price: "€3.50", img: img("O1") },
+    { name: "P1", description: "Pink grapefruit", price: "€4.00", img: img("P1") },
+    { name: "S1", description: "Strawberry, blueberry, orange, banana", price: "€7.50", img: img("S1") },
+    { name: "S2", description: "Coconut milk, banana, peanut butter", price: "€7.00", img: img("S2") },
+    { name: "Black Magic", description: "Coconut water, activated charcoal, cold pressed pineapple, cold pressed ginger", price: "€7.50", img: img("Black Magic") },
+    { name: "Super Greens", description: "Coconut water, cold pressed ginger, spirulina, hemp protein, banana, kiwi, raw spinach", price: "€8.00", img: img("Super Greens") },
+    { name: "Vegan Cacao Smoothie", description: "Peanut butter, banana", price: "€7.50", img: img("Vegan Cacao Smoothie") },
   ],
-  Drinks: [
-    { name: "Classic Lemonade", description: "Freshly squeezed lemon, mint, sparkling water, cane sugar", price: "€6", img: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&auto=format&fit=crop" },
-    { name: "Fresh Juice", description: "Daily blend — orange, carrot & ginger or seasonal special", price: "€6", img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&auto=format&fit=crop" },
-    { name: "Iced Matcha Latte", description: "Ceremonial matcha, oat milk, vanilla, served over ice", price: "€7", img: "https://images.unsplash.com/photo-1630699375896-24df8b2c7aa8?w=600&auto=format&fit=crop" },
-    { name: "Milkbar Affogato", description: "Double espresso poured over vanilla bean ice cream", price: "€7", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format&fit=crop" },
+  "Hot & Cold": [
+    { name: "Americano", description: "", price: "€3.50", img: img("Americano") },
+    { name: "Flat White", description: "", price: "€3.50", img: img("Flat White") },
+    { name: "Cappuccino", description: "", price: "€4.00", img: img("Cappuccino") },
+    { name: "Latte", description: "", price: "€4.00", img: img("Latte") },
+    { name: "French Press", description: "", price: "€3.50", img: img("French Press") },
+    { name: "Freddo Espresso", description: "", price: "€3.50", popular: true, img: img("Freddo Espresso") },
+    { name: "Freddo Cappuccino", description: "", price: "€3.50", img: img("Freddo Cappuccino") },
+    { name: "Iced Americano", description: "", price: "€3.50", img: img("Iced Americano") },
+    { name: "Iced Flat White", description: "", price: "€3.50", img: img("Iced Flat White") },
+    { name: "Iced Latte", description: "", price: "€4.00", img: img("Iced Latte") },
+    { name: "Iced Bumble Coffee", description: "", price: "€6.00", img: img("Iced Bumble Coffee") },
+    { name: "Matcha Latte", description: "", price: "€6.50", img: img("Matcha Latte") },
+    { name: "Iced Coconut Matcha Espresso", description: "", price: "€7.50", img: img("Iced Coconut Matcha Espresso") },
+    { name: "Matcha Rose Latte", description: "Σερβίρεται με γάλα καρύδας", price: "€7.50", img: img("Matcha Rose Latte") },
+    { name: "Dreamy Vegan Cacao", description: "", price: "€6.50", img: img("Dreamy Vegan Cacao") },
+    { name: "Cold Brew Organic Iced Rose Tea", description: "", price: "€4.00", img: img("Cold Brew Organic Iced Rose Tea") },
+    { name: "Water 0.5L", description: "", price: "€1.00", img: img("Water 0.5L") },
   ],
-  Desserts: [
-    { name: "Milkbar's Special", description: "Fluffy American pancakes, seasonal berries, maple butter, cream", price: "€12", img: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600&auto=format&fit=crop" },
-    { name: "Waffles", description: "Belgian waffles, Nutella, banana, vanilla ice cream, caramel drizzle", price: "€11", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600&auto=format&fit=crop" },
-    { name: "American Maple Pancakes", description: "Stack of three, crispy bacon, real maple syrup, butter", price: "€12", img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&auto=format&fit=crop" },
+  "Desserts": [
+    { name: "Stuffed Medjool Date with Peanut Butter & Dark Chocolate", description: "", price: "€3.00", img: img("Stuffed Medjool Date with Peanut Butter & Dark Chocolate") },
+    { name: "Raw Cacao Bar with Pistachio & Orange", description: "", price: "€5.00", img: img("Raw Cacao Bar with Pistachio & Orange") },
+    { name: "Raw Dark Chocolate & Salted Peanut Butter Tart", description: "", price: "€8.00", img: img("Raw Dark Chocolate & Salted Peanut Butter Tart") },
+    { name: "Carrot Muffin", description: "", price: "€6.50", img: img("Carrot Muffin") },
   ],
-  Cocktails: [
-    { name: "Espressotini", description: "Vodka, Kahlúa, fresh espresso, vanilla syrup", price: "€13", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&auto=format&fit=crop" },
-    { name: "Hugo", description: "Prosecco, elderflower liqueur, mint, lime, soda", price: "€12", img: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&auto=format&fit=crop" },
-    { name: "Aperol Spritz", description: "Aperol, Prosecco, soda water, fresh orange slice", price: "€11", img: "https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=600&auto=format&fit=crop" },
-    { name: "Sangria", description: "Red wine, brandy, orange juice, fresh fruit, cinnamon", price: "€10", img: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&auto=format&fit=crop" },
-    { name: "Old Fashioned", description: "Bourbon, Angostura bitters, orange peel, Demerara sugar", price: "€14", img: "https://images.unsplash.com/photo-1470338745628-171cf53de3a8?w=600&auto=format&fit=crop" },
+  "Retail": [
+    { name: "Homemade Slow Roasted Nutty Maple Granola", description: "500gr · take a jar of the house granola home", price: "€15.00", img: img("Homemade Slow Roasted Nutty Maple Granola") },
   ],
 };
 
-export const categories = ['Mains', ...Object.keys(menuData).filter(k => k !== 'Mains')];
+export const categorySubtitles = {
+  "Most Ordered": "Our guests' favourites",
+  "Bakery": "Freshly baked",
+  "Oats & Chia": "Slow mornings",
+  "Granola Bowls": "Homemade granola bowls",
+  "Smoothie Bowls": "Thick, cold & loaded",
+  "Veggie Dishes": "Garden-fresh plates",
+  "Juices & Smoothies": "Cold pressed juices & smoothies",
+  "Hot & Cold": "Hot & cold beverages",
+  "Desserts": "Sweet — mostly raw",
+  "Retail": "Take a little home",
+};
+
+export const categories = Object.keys(menuData);
