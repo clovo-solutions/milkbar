@@ -1,10 +1,10 @@
-import { useRef, useState, useCallback, useLayoutEffect } from 'react';
+import { useRef, useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const VIDEOS = ['/videos/cookhouse-1.mp4', '/videos/cookhouse-2.mp4'];
 const WORD = 'THE COOKHOUSE';
 
-export default function Hero() {
+export default function Hero({ onReady, started }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const ref0 = useRef(null);
   const ref1 = useRef(null);
@@ -21,6 +21,12 @@ export default function Hero() {
     document.fonts?.ready?.then(measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
+
+  // If the first video is already buffered (cached), canplaythrough may fire
+  // before React attaches the handler — catch that case on mount.
+  useEffect(() => {
+    if (ref0.current && ref0.current.readyState >= 4) onReady?.();
+  }, [onReady]);
 
   const handleEnded = useCallback((endedIndex) => {
     const next = (endedIndex + 1) % 2;
@@ -51,6 +57,8 @@ export default function Hero() {
           playsInline
           autoPlay={i === 0}
           preload="auto"
+          onCanPlayThrough={i === 0 ? onReady : undefined}
+          onError={i === 0 ? onReady : undefined}
           onEnded={() => handleEnded(i)}
           style={{
             position: 'absolute',
@@ -99,7 +107,7 @@ export default function Hero() {
             <span key={i} style={{ display: 'inline-block', width: char === ' ' ? 'clamp(18px, 3.5vw, 48px)' : 'auto' }}>
               <motion.span
                 initial={{ opacity: 0, y: 18, filter: 'blur(12px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                animate={started ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 18, filter: 'blur(12px)' }}
                 transition={{
                   duration: 1.2,
                   delay: 0.15 + i * 0.06,
@@ -128,13 +136,13 @@ export default function Hero() {
           <div style={{ width: lineW, display: 'flex', alignItems: 'center', gap: 16, marginTop: 'clamp(14px, 2vw, 26px)' }}>
             <motion.div
               initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
+              animate={started ? { scaleX: 1 } : { scaleX: 0 }}
               transition={{ delay: 1.0, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              style={{ flex: 1, height: 3, background: 'rgba(255,255,255,0.5)', transformOrigin: 'left center' }}
+              style={{ flex: 1, height: 2, background: 'rgba(255,255,255,0.5)', transformOrigin: 'left center' }}
             />
             <motion.span
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={started ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 2.0, duration: 0.6 }}
               style={{
                 fontFamily: 'var(--font-body)',
@@ -153,7 +161,7 @@ export default function Hero() {
 
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={started ? { opacity: 1 } : { opacity: 0 }}
           transition={{ delay: 1.3, duration: 0.7 }}
           style={{
             fontFamily: 'var(--font-body)',

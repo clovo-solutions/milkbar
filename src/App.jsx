@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createLenis } from './lib/lenis';
 import Nav from './components/Nav';
+import Loader from './components/Loader';
 import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
 import MenuMarquee from './components/MenuMarquee';
@@ -12,6 +13,13 @@ import Footer from './components/Footer';
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState('Most Ordered');
+  const [loaded, setLoaded] = useState(false);
+
+  // Fallback: never trap the user behind the loader if the video stalls.
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 8000);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const lenis = createLenis();
@@ -27,8 +35,9 @@ export default function App() {
 
   return (
     <>
+      <Loader show={!loaded} />
       <Nav />
-      <Hero />
+      <Hero onReady={() => setLoaded(true)} started={loaded} />
       <Philosophy />
       <MenuMarquee onCategoryClick={handleMarqueeClick} />
       <MenuGrid activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
